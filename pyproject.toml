@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sorkit"
+version = "0.1.0"
+description = "Surface-Oracle-Ratchet MCP server for autonomous code optimization"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+keywords = ["mcp", "autonomous", "code-optimization", "ai-agent", "surface-oracle-ratchet"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = [
+    "fastmcp>=2.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+    "pytest-mock>=3.10",
+]
+
+[project.urls]
+Homepage = "https://github.com/2lines/sorkit"
+Repository = "https://github.com/2lines/sorkit"
+Issues = "https://github.com/2lines/sorkit/issues"
+
+[project.scripts]
+sorkit = "sorkit.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sorkit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
