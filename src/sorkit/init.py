@@ -212,7 +212,7 @@ def generate_claude_md(config: SorConfig, project_dir: Path) -> None:
     lines.append("- An **oracle** (automated tests that determine pass/fail)")
     lines.append("- A **ratchet** (git commit on improvement, git reset on failure)")
     lines.append("")
-    lines.append("Run `./run_oracle.sh [layer]` to evaluate. See `.claude/skills/experiment-loop.md` for the protocol.")
+    lines.append("Use `sor_run_oracle` to evaluate. See `.claude/skills/experiment-loop.md` for the protocol.")
     lines.append("")
 
     # Frozen files
@@ -256,7 +256,7 @@ def generate_claude_md(config: SorConfig, project_dir: Path) -> None:
     lines.append(f"| Diminishing threshold | {diminishing} (min delta over window) |")
     lines.append(f"| Consecutive failure limit | {fail_limit} |")
     lines.append("")
-    lines.append("To adjust, edit the thresholds in `sor.yaml` and re-run `./scripts/sor-init.sh`.")
+    lines.append("To adjust, edit the thresholds in `sor.yaml` and regenerate with `sor_init`.")
 
     (project_dir / "CLAUDE.md").write_text("\n".join(lines) + "\n")
 
@@ -301,9 +301,7 @@ Keep changes atomic — one idea per iteration.
 
 #### Step 3: Run the Ratchet
 
-```bash
-./scripts/ratchet.sh <layer_number> "brief hypothesis description"
-```
+Call `sor_ratchet` with the layer name and your hypothesis description.
 
 The ratchet will:
 - Run the oracle
@@ -325,10 +323,8 @@ The ratchet prints exactly one of:
 Review `results.tsv` to see what you've tried. Pick a different approach.
 Do NOT repeat a failed hypothesis with minor variations more than once.
 
-If you have 3+ consecutive failures, read the test output more carefully:
-```bash
-tail -n 50 run.log
-```
+If you have 3+ consecutive failures, call `sor_results` to review recent outcomes
+and read the test output more carefully.
 
 ### Stopping Conditions
 
