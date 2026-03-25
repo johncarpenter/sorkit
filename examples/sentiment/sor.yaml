@@ -1,0 +1,54 @@
+# sor.yaml — Sentiment Analyzer Example
+# Demonstrates the Surface-Oracle-Ratchet pattern with sorkit.
+
+project_name: "Sentiment Analyzer"
+
+always_frozen:
+  - "fixtures/"
+  - "tests/"
+  - "sor.yaml"
+  - "CLAUDE.md"
+  - ".claude/"
+  - "results.tsv"
+
+defaults:
+  test_runner: "python -m pytest"
+  max_attempts: 20
+  consecutive_failure_limit: 5
+  plateau_limit: 5
+  diminishing_threshold: 0.005
+  diminishing_window: 5
+
+layers:
+  - name: "classifier"
+    surface:
+      - "src/classifier.py"
+    oracle:
+      contracts: "tests/test_classifier_contract.py"
+      scored: true
+      scored_tests: "tests/test_classifier_accuracy.py"
+      metrics:
+        - name: "accuracy"
+          extract: "ACCURACY"
+          weight: 0.5
+        - name: "pos_recall"
+          extract: "POS_RECALL"
+          weight: 0.2
+        - name: "neg_recall"
+          extract: "NEG_RECALL"
+          weight: 0.2
+        - name: "neu_recall"
+          extract: "NEU_RECALL"
+          weight: 0.1
+    thresholds:
+      target_score: 0.85
+      max_attempts: 30
+
+  - name: "api"
+    surface:
+      - "src/api.py"
+    oracle:
+      contracts: "tests/test_api_contract.py"
+      scored: false
+    thresholds:
+      max_attempts: 10
