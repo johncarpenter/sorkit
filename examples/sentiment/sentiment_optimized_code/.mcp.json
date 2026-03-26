@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "sorkit": {
+      "command": "sorkit"
+    }
+  }
+}

@@ -9,6 +9,24 @@ advances only when it improves ("ratchet").
 pip install sorkit
 ```
 
+## Real Results: Sentiment Classifier Example
+
+A Claude agent was given a naive sentiment classifier (6 positive words, 6 negative words, ~39% accuracy) and 50 labeled test examples it couldn't modify. Here's what happened:
+
+| Iteration | Composite Score | What the Agent Did | Outcome |
+|-----------|-----------------|-------------------|---------|
+| 0 (baseline) | 0.3864 | — | — |
+| 1 | 0.8463 | Expanded word lists, added phrase matching, punctuation stripping, negation handling | KEEP |
+| 2 | 0.9438 | Added neutral phrases, removed false-positive words, tuned tied-score logic | KEEP → **TARGET MET** |
+
+**From 39% to 94% in 2 iterations.** Then it implemented the API layer in 1 attempt — all 7 contract tests passed on the first try.
+
+The agent discovered patterns the starter code didn't have: negation handling ("not bad" → positive), multi-word phrases ("waste of money"), punctuation stripping, and neutral-phrase overrides. All autonomously, guided only by the test output.
+
+> See the full optimized code and run transcript in [`examples/sentiment/sentiment_optimized_code/`](examples/sentiment/sentiment_optimized_code/)
+
+---
+
 ## Table of Contents
 
 - [The Pattern](#the-pattern)

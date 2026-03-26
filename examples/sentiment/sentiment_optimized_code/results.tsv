@@ -1,0 +1,4 @@
+timestamp	layer	hypothesis	score	outcome
+2026-03-26T01:08:00	classifier	Expand positive/negative word lists, add phrase matching, strip punctuation, add basic negation handling	0.8463	KEEP
+2026-03-26T01:09:27	classifier	Add neutral phrases, remove false-positive words (quality/surprised/favorite), add easier/surprisingly/actually great, neutral phrase override for tied scores	0.9438	KEEP
+2026-03-26T01:11:41	api	Implement analyze() to return dict with text, sentiment from classifier, and static confidence value	PASS	KEEP
